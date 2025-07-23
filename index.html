@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surat Cinta Mobile</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Patrick Hand', cursive;
+      background: linear-gradient(to bottom, #ffe1e8, #fff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .judul {
+      margin-top: 30px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #d81b60;
+      text-align: center;
+    }
+
+    .foto-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .foto-farah {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px dashed #f48fb1;
+      background-color: #fff0f5;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: melayang 3s ease-in-out infinite;
+    }
+
+    .tombol-buka {
+      background: #ff80ab;
+      color: white;
+      font-size: 18px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      margin: 20px 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+      font-family: 'Patrick Hand', cursive;
+    }
+
+    .tombol-buka:hover {
+      background: #d81b60;
+    }
+
+    .isi-surat {
+      max-width: 90%;
+      background: #fff8f9;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      font-size: 17px;
+      color: #444;
+      margin-bottom: 40px;
+      white-space: pre-line;
+      opacity: 0;
+      transition: opacity 2s ease;
+      border: 2px dashed #f48fb1;
+    }
+
+    .isi-surat.muncul {
+      opacity: 1;
+    }
+
+    .audio-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #f06292;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 20px;
+    }
+
+    .kelopak {
+      position: fixed;
+      top: -40px;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+      animation: jatuh 10s linear infinite;
+      opacity: 0.7;
+    }
+
+    .stiker {
+      position: absolute;
+      font-size: 26px;
+      animation: lompat 2s infinite alternate ease-in-out;
+    }
+
+    .stiker.teddy { bottom: 70px; left: 20px; }
+    .stiker.flower { top: 20px; right: 20px; }
+    .stiker.strawberry { bottom: 50px; right: 80px; }
+
+    .emoji-kucing {
+      position: absolute;
+      font-size: 22px;
+    }
+
+    @keyframes jatuh {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    @keyframes lompat {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    @keyframes melayang {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      50%  { transform: translateY(-10px) rotate(1deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="musik" autoplay loop>
+    <source src="musik-romantis.mp3" type="audio/mpeg">
+    Browser tidak mendukung audio.
+  </audio>
+
+  <h1 class="judul">Untuk FARAH NABILA HARAHAP 💖</h1>
+
+  <div class="foto-container">
+    <img src="foto1.jpg" alt="Foto Farah" class="foto-farah">
+    <img src="foto2.jpg" alt="Foto Bersama" class="foto-farah">
+  </div>
+
+  <button class="tombol-buka" onclick="tampilkanSurat(); munculkanKucing();">Buka Surat</button>
+
+  <div class="isi-surat" id="surat">
+Hai Farah...
+
+Kamu nggak sendiri ya.
+Aku di sini buat dengerin, nemenin, atau sekadar duduk diem bareng kamu kalo kamu butuh.
+Kalau dunia rasanya berat x,
+kamu boleh rehat sebentar. Kamu boleh nangis, kamu boleh marah... tapi jangan pernah ngerasa sendiri(no no yaaa).
+Aku sayang kamu cuyunkkkkkk 💌
+  </div>
+
+  <button class="audio-btn" onclick="toggleMusik()">♫</button>
+
+  <div class="stiker teddy">🧸</div>
+  <div class="stiker flower">🌼</div>
+  <div class="stiker strawberry">🍓</div>
+
+  <div id="kucing-container"></div>
+
+  <script>
+    function tampilkanSurat() {
+      document.getElementById('surat').classList.add('muncul');
+    }
+
+    function toggleMusik() {
+      const musik = document.getElementById('musik');
+      musik.paused ? musik.play() : musik.pause();
+    }
+
+    function buatKelopak() {
+      const kelopak = document.createElement('div');
+      kelopak.classList.add('kelopak');
+      kelopak.style.left = Math.random() * 100 + 'vw';
+      kelopak.style.animationDuration = (6 + Math.random() * 4) + 's';
+      document.body.appendChild(kelopak);
+      setTimeout(() => kelopak.remove(), 10000);
+    }
+    setInterval(buatKelopak, 700);
+
+    function munculkanKucing() {
+      const container = document.getElementById('kucing-container');
+      for (let i = 0; i < 10; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-kucing';
+        emoji.innerText = '🐈';
+        emoji.style.top = Math.random() * 90 + '%';
+        emoji.style.left = Math.random() * 90 + '%';
+        emoji.style.animation = `loncat ${2 + Math.random() * 2}s infinite ease-in-out`;
+        container.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 8000);
+      }
+    }
+  </script>
+
+</body>
+</html>
